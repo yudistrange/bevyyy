@@ -1,9 +1,11 @@
 use bevy::{
     prelude::{Component, Input, KeyCode, Query, Res, Transform, Vec3, With},
     time::Time,
+    window::{PrimaryWindow, Window},
 };
 
 pub const PLAYER_SPEED: f32 = 500.0;
+pub const PLAYER_SIZE: f32 = 64.0;
 
 #[derive(Component)]
 pub struct PlayerControlled;
@@ -17,6 +19,41 @@ pub fn add_movement(
         let direction: Vec3 = handle_keyboard_inputs(keyboard_input);
 
         player_transform.translation += direction * time.delta_seconds() * PLAYER_SPEED
+    }
+}
+
+pub fn constraint_movement_to_window_size(
+    mut player_query: Query<&mut Transform, With<PlayerControlled>>,
+    window_query: Query<&Window, With<PrimaryWindow>>,
+) {
+    let window = window_query.get_single().unwrap();
+    if let Ok(mut player_transform) = player_query.get_single_mut() {
+        let mut translation = player_transform.translation;
+        let player_sprite_size = PLAYER_SIZE / 2.0;
+
+        let x_min = 0.0 + player_sprite_size;
+        let x_max = window.width() - player_sprite_size;
+        let y_min = 0.0 + player_sprite_size;
+        let y_max = window.height() - player_sprite_size;
+
+        if translation.x > x_max {
+            translation.x = x_max
+        } else if translation.x < x_min {
+            translation.x = x_min
+        }
+
+        if translation.y > y_max {
+            translation.y = y_max
+        } else if translation.y < y_min {
+            translation.y = y_min
+        }
+
+        println!(
+            "x_min: {}\nx_max: {}\ny_min: {}\ny_max: {}",
+            x_min, x_max, y_min, y_max
+        );
+
+        player_transform.translation = translation
     }
 }
 
