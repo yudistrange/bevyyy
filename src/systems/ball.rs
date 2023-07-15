@@ -1,3 +1,4 @@
+use crate::components::player_controlled::PlayerControlled;
 use bevy::{
     prelude::{AssetServer, Commands, Query, Res, Transform, With},
     sprite::SpriteBundle,
@@ -11,9 +12,12 @@ pub fn spawn_ball(
 ) {
     let window = window_query.get_single().unwrap();
 
-    commands.spawn(SpriteBundle {
-        transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 0.0),
-        texture: asset_server.load("sprites/ball.png"),
-        ..Default::default()
-    });
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 0.0),
+            texture: asset_server.load("sprites/ball.png"),
+            ..Default::default()
+        },
+        PlayerControlled {},
+    ));
 }

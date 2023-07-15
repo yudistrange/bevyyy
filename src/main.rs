@@ -9,6 +9,7 @@ use bevy::{
 };
 use systems::{ball::spawn_ball, camera::spawn_camera};
 
+mod components;
 mod systems;
 
 fn main() {
