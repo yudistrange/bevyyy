@@ -7,14 +7,14 @@ use bevy::{
     time::{Time, Timer, TimerMode},
     DefaultPlugins,
 };
-use systems::{ball::add_ball, camera::add_camera};
+use systems::{ball::spawn_ball, camera::spawn_camera};
 
 mod systems;
 
 fn main() {
     App::new()
-        .add_systems(Startup, add_ball)
-        .add_systems(Startup, add_camera)
+        .add_systems(Startup, spawn_ball)
+        .add_systems(Startup, spawn_camera)
         .add_plugins(DefaultPlugins)
         // .add_plugins(HelloPlugin)
         .run();

@@ -4,7 +4,7 @@ use bevy::{
     window::{PrimaryWindow, Window},
 };
 
-pub fn add_ball(
+pub fn spawn_ball(
     mut commands: Commands,
     window_query: Query<&Window, With<PrimaryWindow>>,
     asset_server: Res<AssetServer>,

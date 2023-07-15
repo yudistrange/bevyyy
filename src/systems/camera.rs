@@ -3,7 +3,7 @@ use bevy::{
     window::{PrimaryWindow, Window},
 };
 
-pub fn add_camera(mut commands: Commands, window_query: Query<&Window, With<PrimaryWindow>>) {
+pub fn spawn_camera(mut commands: Commands, window_query: Query<&Window, With<PrimaryWindow>>) {
     let window = window_query.get_single().unwrap();
 
     commands.spawn(Camera2dBundle {
