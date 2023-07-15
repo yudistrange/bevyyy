@@ -7,6 +7,7 @@ use bevy::{
     time::{Time, Timer, TimerMode},
     DefaultPlugins,
 };
+use components::player_controlled::add_movement;
 use systems::{ball::spawn_ball, camera::spawn_camera};
 
 mod components;
@@ -16,6 +17,7 @@ fn main() {
     App::new()
         .add_systems(Startup, spawn_ball)
         .add_systems(Startup, spawn_camera)
+        .add_systems(Update, add_movement)
         .add_plugins(DefaultPlugins)
         // .add_plugins(HelloPlugin)
         .run();
